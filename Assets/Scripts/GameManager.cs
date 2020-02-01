@@ -10,12 +10,14 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     Timer timer;
 
-    RobotState currentRobot;
+    [SerializeField]
+    Score score;
+
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(StartSpawningNewRobot());
         timer.OnTimeEnd += GameOver;
+        conveyerBelt.OnSpawnedNewRobot += OnNextRobot;
 	}
 
     void GameOver()
@@ -23,23 +25,8 @@ public class GameManager : MonoBehaviour {
         Debug.Log("Game Over");
     }
 
-    void OnCurrentRobotDone(RobotState.States robotState)
+    void OnNextRobot(RobotState robotState)
     {
-        if (robotState == RobotState.States.LEAVING)
-        {
-            currentRobot.OnStateChange -= OnCurrentRobotDone;
-            StartCoroutine(StartSpawningNewRobot());
-        }
-    }
-
-    // If spawning new robot, add score.
-    IEnumerator StartSpawningNewRobot()
-    {
-        yield return new WaitForSeconds(2.0f);
-        GameObject newRobotObject = conveyerBelt.LoadNewRobot();
-        currentRobot = newRobotObject.GetComponent<RobotState>();
-        currentRobot.OnStateChange += OnCurrentRobotDone;
-        yield return new WaitForEndOfFrame();
-        currentRobot.Enter();
+        score.AddToScore(100);
     }
 }

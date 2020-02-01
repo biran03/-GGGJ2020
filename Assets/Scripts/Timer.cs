@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
 
     float currentTime = 0f; //0 floating
-    float startingTime = 500f; //500 floating
+    float startingTime = 5f; //500 floating
 
     [SerializeField] Text countdownText;
 
@@ -22,13 +22,15 @@ public class Timer : MonoBehaviour
 
     void Update() //decrease time
     {
-        currentTime -= 1 * Time.deltaTime; // deltaTime allows decrease time by 1 second rather than by frame
-        countdownText.text = currentTime.ToString();
-
         if (currentTime <= 0)
         {
             currentTime = 0;
             OnTimeEnd?.Invoke();
         }
+        else
+        {
+            currentTime -= 1 * Time.deltaTime; // deltaTime allows decrease time by 1 second rather than by frame
+        }
+        countdownText.text = currentTime.ToString();
     }
 }

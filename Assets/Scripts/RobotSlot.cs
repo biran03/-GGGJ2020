@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class RobotSlot : MonoBehaviour {
 
-    bool attached;
+    public bool Attached;   
     public System.Action<bool> OnAttachUpdate;
 
     // To be called when snap or detach, OnJointBreak or OnSnap it will call update slot with state.
     public void Attach()
     {
-        attached = true;
+        Attached = true;
         OnAttachUpdate?.Invoke(true);
     }
 
     public void Detach()
     {
-        attached = false;
+        Attached = false;
         OnAttachUpdate?.Invoke(false);
     }
 }

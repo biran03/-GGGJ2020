@@ -34,13 +34,23 @@ public class snap_point : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.tag == "snapable") {
+        if (other.tag == "Slot") {
             paired = other.gameObject;
+            RobotSlot robotSlot = paired.GetComponent<RobotSlot>();
+            if (robotSlot.Attached)
+            {
+                paired = null;
+            }
+            else
+            {
+                robotSlot.Attach();
+            }
         }
     }
 
     void OnJointBreak(float breakForce) {
         Debug.Log("A joint has just been broken!, force: " + breakForce);
+        paired.GetComponent<RobotSlot>().Detach();
         //call func in paired
         paired = null;
     }
