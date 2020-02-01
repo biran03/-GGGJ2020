@@ -6,11 +6,8 @@ public class ConveyerBelt : MonoBehaviour {
 
     public GameObject[] robotPrefabs;
 
-
-
     private void Start()
     {
-
         Object[] robotPrefabs = Resources.LoadAll("Prefabs/Robots");
         this.robotPrefabs = new GameObject[robotPrefabs.Length];
         for (int i = 0; i < robotPrefabs.Length; ++i)
