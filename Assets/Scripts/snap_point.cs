@@ -29,8 +29,6 @@ public class snap_point : MonoBehaviour {
                 cj.connectedBody = pairedrb;
             }
         }
-
-
     }
 
     void OnTriggerEnter(Collider other) {
@@ -48,7 +46,6 @@ public class snap_point : MonoBehaviour {
     void OnJointBreak(float breakForce) {
         Debug.Log("A joint has just been broken!, force: " + breakForce);
         paired.GetComponent<RobotSlot>().Detach();
-        //call func in paired
         paired = null;
     }
 }
