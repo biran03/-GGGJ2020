@@ -7,34 +7,26 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     ConveyerBelt conveyerBelt;
 
-    RobotState currentRobot;
+    [SerializeField]
+    Timer timer;
+
+    [SerializeField]
+    Score score;
+
 
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(StartSpawningNewRobot());
+        timer.OnTimeEnd += GameOver;
+        conveyerBelt.OnSpawnedNewRobot += OnNextRobot;
 	}
 
-    void OnCurrentRobotDone(RobotState.States robotState)
+    void GameOver()
     {
-        if (robotState == RobotState.States.LEAVING)
-        {
-            currentRobot.OnStateChange -= OnCurrentRobotDone;
-            StartCoroutine(StartSpawningNewRobot());
-        }
+        Debug.Log("Game Over");
     }
 
-    IEnumerator StartSpawningNewRobot()
+    void OnNextRobot(RobotState robotState)
     {
-        yield return new WaitForSeconds(2.0f);
-        GameObject newRobotObject = conveyerBelt.LoadNewRobot();
-        currentRobot = newRobotObject.GetComponent<RobotState>();
-        currentRobot.OnStateChange += OnCurrentRobotDone;
-        yield return new WaitForEndOfFrame();
-        currentRobot.Enter();
+        score.AddToScore(100);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
