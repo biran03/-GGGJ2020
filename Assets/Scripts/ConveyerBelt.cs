@@ -32,12 +32,12 @@ public class ConveyerBelt : MonoBehaviour {
         currentRobot = newRobot.GetComponent<RobotState>();
         currentRobot.OnStateChange += (RobotState.States state) =>
         {
-            Debug.Log("I get called");
             if (state == RobotState.States.LEAVING)
             {
                 StartCoroutine(StartSpawningNewRobot());
             }
         };
+        OnSpawnedNewRobot?.Invoke(currentRobot);
     }
 
     IEnumerator StartSpawningNewRobot()

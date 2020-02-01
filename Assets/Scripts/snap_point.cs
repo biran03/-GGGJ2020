@@ -34,14 +34,11 @@ public class snap_point : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+
         if (other.tag == "Slot") {
             paired = other.gameObject;
             RobotSlot robotSlot = paired.GetComponent<RobotSlot>();
-            if (robotSlot.Attached)
-            {
-                paired = null;
-            }
-            else
+            if (!robotSlot.Attached)
             {
                 robotSlot.Attach();
             }
