@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 156336414}
   - component: {fileID: 156336419}
   - component: {fileID: 156336418}
+  - component: {fileID: 156336420}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Respawn
@@ -235,6 +236,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
+--- !u!114 &156336420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156336413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de98a967967c47241871fa4a6cd24a8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldItem: {fileID: 0}
+  Empty: 0
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,13 +493,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bdecba1b9438804f84d3e5e11d6fbea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerCheck: {fileID: 0}
+  triggerCheck: {fileID: 156336420}
   Drawer: {fileID: 156336413}
+  ParentObject: {fileID: 1593180464}
   objects:
   - obj: {fileID: 4515376415242956755, guid: 954cee39e875f5d4ea298e425b7b7fcf, type: 3}
-    chance: 98
+    chance: 50
   - obj: {fileID: 4763577799122398296, guid: b876a79287fec004dabbfb894efff4db, type: 3}
-    chance: 1
+    chance: 50
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +720,6 @@ GameObject:
   - component: {fileID: 1593180465}
   - component: {fileID: 1593180469}
   - component: {fileID: 1593180470}
-  - component: {fileID: 1593180471}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -824,21 +839,6 @@ SpringJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &1593180471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593180464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de98a967967c47241871fa4a6cd24a8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Drawer: {fileID: 156336413}
-  TriggerSpawn: {fileID: 521908692}
-  Empty: 0
 --- !u!1001 &4321561888143041593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -920,6 +920,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.62764
+      objectReference: {fileID: 0}
+    - target: {fileID: 6501827717033700768, guid: 954cee39e875f5d4ea298e425b7b7fcf,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 954cee39e875f5d4ea298e425b7b7fcf, type: 3}

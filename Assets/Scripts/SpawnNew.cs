@@ -6,6 +6,7 @@ public class SpawnNew : MonoBehaviour
 {
     public isEmpty triggerCheck;
     public GameObject Drawer;
+    public GameObject ParentObject;
     [SerializeField] private ObjectInfo[] objects;  // fill in editor
 
     GameObject GetRandomObject(ObjectInfo[] objects)
@@ -31,8 +32,7 @@ public class SpawnNew : MonoBehaviour
     {
         if (other.tag == "Respawn")
         {
-            GameObject spawnObj = Instantiate(GetRandomObject(objects),Drawer.transform.position,Quaternion.identity);
-            spawnObj.transform.SetParent(Drawer.transform, true);
+            spawnRandom();
 
         }
     }
@@ -42,7 +42,14 @@ public class SpawnNew : MonoBehaviour
     {
         if (triggerCheck.Empty)
         {
-            
+            triggerCheck.DestroyTool();
+            GameObject spawnObj = Instantiate(GetRandomObject(objects), Drawer.transform.position, Quaternion.identity);
+            spawnObj.transform.SetParent(ParentObject.transform, true);
+        }
+        else if (!triggerCheck.Empty)
+        {
+            GameObject spawnObj = Instantiate(GetRandomObject(objects), Drawer.transform.position, Quaternion.identity);
+            spawnObj.transform.SetParent(ParentObject.transform, true);
         }
 
     }
