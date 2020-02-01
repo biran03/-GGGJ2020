@@ -15,13 +15,15 @@ public class RobotState : MonoBehaviour {
 
     // When creating Robot prefabs, assign the open areas these open slots.
     // Simply to know how many there are total.
-    public RobotSlot[] openSlots;
+    [SerializeField]
+    RobotSlot[] openSlots;
     int slotsFilled = 0;
 
     public System.Action<States> OnStateChange;
 
     private void Start()
     {
+        openSlots = GetComponentsInChildren<RobotSlot>();
         for (int i = 0; i < openSlots.Length; ++i)
         {
             openSlots[i].OnAttachUpdate += SlotFilled;
@@ -43,16 +45,17 @@ public class RobotState : MonoBehaviour {
             if (slotsFilled == openSlots.Length)
             {
                 Finish();
+                // unsubscribe so nothing somehow detaches them on their way out.
+                for (int i = 0; i < openSlots.Length; ++i)
+                {
+                    openSlots[i].OnAttachUpdate -= SlotFilled;
+                }
             }
         }
         else
         {
             slotsFilled -= 1;
-            // Not really needed to unsubscribe, since not pooling they'd be destroyed.
-            for (int i = 0; i < openSlots.Length; ++i)
-            {
-                openSlots[i].OnAttachUpdate -= SlotFilled;
-            }
+            
         }
     }
 
