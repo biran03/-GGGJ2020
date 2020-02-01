@@ -7,12 +7,21 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     ConveyerBelt conveyerBelt;
 
+    [SerializeField]
+    Timer timer;
+
     RobotState currentRobot;
 
 	// Use this for initialization
 	void Start () {
         StartCoroutine(StartSpawningNewRobot());
+        timer.OnTimeEnd += GameOver;
 	}
+
+    void GameOver()
+    {
+        Debug.Log("Game Over");
+    }
 
     void OnCurrentRobotDone(RobotState.States robotState)
     {
@@ -23,6 +32,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    // If spawning new robot, add score.
     IEnumerator StartSpawningNewRobot()
     {
         yield return new WaitForSeconds(2.0f);
@@ -32,9 +42,4 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
         currentRobot.Enter();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

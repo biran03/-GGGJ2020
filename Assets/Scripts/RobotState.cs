@@ -14,61 +14,52 @@ public class RobotState : MonoBehaviour {
     States currentState;
 
     // When creating Robot prefabs, assign the open areas these open slots.
-    public GameObject[] openSlots;
-    bool[] slotValues;
+    // Simply to know how many there are total.
+    public RobotSlot[] openSlots;
+    int slotsFilled = 0;
 
     public System.Action<States> OnStateChange;
 
     private void Start()
     {
-        slotValues = new bool[openSlots.Length];
         for (int i = 0; i < openSlots.Length; ++i)
         {
-            slotValues[i] = false;
+            openSlots[i].OnAttachUpdate += SlotFilled;
         }
     }
 
     public void Enter()
     {
         currentState = States.ENTERING;
-        OnStateChangeEventHandler();
+        OnStateChange?.Invoke(currentState);
     }
 
 
-    // To be called when snap or detach, OnJointBreak or OnSnap it will call update slot with state.
-    public void UpdateSlot(GameObject gameObject, bool state)
+    private void SlotFilled(bool slotUpdate)
     {
-        int amountTrue = 0;
-        for (int i = 0; i < openSlots.Length; ++i)
+        if (slotUpdate)
         {
-            if (slotValues[i])
+            slotsFilled += 1;
+            if (slotsFilled == openSlots.Length)
             {
-                amountTrue += 1;
-            }
-            if (openSlots[i] == gameObject)
-            {
-                slotValues[i] = true;
-                amountTrue += 1;
+                Finish();
             }
         }
-        if (amountTrue == openSlots.Length)
+        else
         {
-            Finish();
+            slotsFilled -= 1;
+            // Not really needed to unsubscribe, since not pooling they'd be destroyed.
+            for (int i = 0; i < openSlots.Length; ++i)
+            {
+                openSlots[i].OnAttachUpdate -= SlotFilled;
+            }
         }
     }
 
-    // Called when all parts are done.
+    // Called when all slots are filled.
     public void Finish()
     {
         currentState = States.LEAVING;
-        OnStateChangeEventHandler();
-    }
-
-    private void OnStateChangeEventHandler()
-    {
-        if (OnStateChange != null)
-        {
-            OnStateChange?.Invoke(currentState);
-        }
+        OnStateChange?.Invoke(currentState);
     }
 }
