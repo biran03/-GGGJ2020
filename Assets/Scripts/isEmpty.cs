@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class isEmpty : MonoBehaviour
 {
-    public GameObject Drawer;
-    public GameObject TriggerSpawn;
+    public GameObject heldItem;
     public bool Empty;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag== "Grabbable")
+        if (other.tag == "Grabbable")
         {
             Empty = false;
+ 
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag=="Grabbable")
+        if (other.tag == "Grabbable")
         {
             Empty = true;
+            heldItem = other.gameObject;
         }
     }
-    // Update is called once per frame
-    void Update()
+    public void DestroyTool()
     {
-        
+        Destroy(heldItem);
     }
+
 }
