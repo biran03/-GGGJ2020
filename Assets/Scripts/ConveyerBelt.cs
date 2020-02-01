@@ -35,6 +35,7 @@ public class ConveyerBelt : MonoBehaviour {
             if (state == RobotState.States.LEAVING)
             {
                 StartCoroutine(StartSpawningNewRobot());
+
             }
         };
         OnSpawnedNewRobot?.Invoke(currentRobot);
